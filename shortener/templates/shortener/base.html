@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShortLink - Сокращение ссылок</title>
+
+    <!-- Решение для вспышки: загружаем тему ДО загрузки CSS -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme') ||
+                             (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'shortener/css/styles.css' %}">
+</head>
+<body>
+    <div class="page-wrapper">  <!-- Добавляем обертку -->
+        {% include 'shortener/header.html' %}
+
+        <main class="main-content">  <!-- Изменяем класс -->
+            <div class="container">  <!-- Оставляем один container -->
+                {% block content %}
+                <!-- Сюда подставляется содержимое других страниц -->
+                {% endblock %}
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="container">  <!-- Этот container остается -->
+                <p>© 2025 ShortLink. Все права защищены.</p>
+                <div class="footer-links">
+                    <a href="#">Политика конфиденциальности</a>
+                    <a href="#">Условия использования</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="{% static 'shortener/js/theme.js' %}"></script>
+</body>
+</html>

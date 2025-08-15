@@ -1,0 +1,10 @@
+{% extends 'shortener/base.html' %}
+
+{% block content %}
+    <h1>Сократите свою ссылку</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="url" name="url" placeholder="Вставьте ссылку" required>
+        <button type="submit">Сократить</button>
+    </form>
+{% endblock %}
