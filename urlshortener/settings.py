@@ -104,7 +104,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'
 
@@ -123,3 +123,16 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # Папка со ста�
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = 'login'  # URL для входа
+
+# Настройки аутентификации
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+# Сессии и куки
+SESSION_COOKIE_AGE = 1209600  # 2 недели (по умолчанию)
+SESSION_SAVE_EVERY_REQUEST = True
+
+LOGOUT_REDIRECT_URL = 'home'  # Перенаправление после выхода

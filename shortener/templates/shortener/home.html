@@ -1,10 +1,52 @@
 {% extends 'shortener/base.html' %}
 
 {% block content %}
-    <h1>Сократите свою ссылку</h1>
-    <form method="POST">
+<div class="url-shortener-container">
+    <h2 class="main-title">Сократите вашу ссылку</h2>
+
+    <form method="POST" class="url-form">
         {% csrf_token %}
-        <input type="url" name="url" placeholder="Вставьте ссылку" required>
-        <button type="submit">Сократить</button>
+        {{ form.original_url }}
+        <button type="submit" class="btn btn-primary btn-large">Сократить</button>
     </form>
+
+    {% if short_url %}
+    <div class="result-box">
+        <h4 class="result-title">Ваша короткая ссылка:</h4>
+        <div class="input-group result-group">
+            <input type="text"
+                   value="{{ short_url }}"
+                   id="short-url"
+                   class="form-control result-input"
+                   readonly>
+            <button class="btn btn-outline-secondary copy-btn"
+                    onclick="copyToClipboard()">
+                📋 Копировать
+            </button>
+        </div>
+        <div class="stats">
+            <span class="badge bg-secondary">Переходов: 0</span>
+            <a href="#" class="qr-link">Получить QR-код</a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+function copyToClipboard() {
+    const input = document.getElementById('short-url');
+    input.select();
+    document.execCommand('copy');
+
+    // Красивое уведомление вместо alert
+    const notification = document.createElement('div');
+    notification.className = 'copy-notification';
+    notification.textContent = '✓ Ссылка скопирована!';
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.remove();
+    }, 2000);
+}
+</script>
 {% endblock %}

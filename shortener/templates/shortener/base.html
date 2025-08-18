@@ -41,5 +41,51 @@
     </div>
 
     <script src="{% static 'shortener/js/theme.js' %}"></script>
+
+    <!-- Подключаем JS-библиотеки -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Ваш кастомный JS -->
+    <script>
+    // Индикатор загрузки для кнопок авторизации
+    document.querySelector('.auth-buttons').addEventListener('click', function(e) {
+        if (e.target.classList.contains('btn')) {
+            const originalText = e.target.innerHTML;
+            e.target.innerHTML = `
+                <span class="spinner-border spinner-border-sm" role="status"></span>
+                Обработка...
+            `;
+            e.target.disabled = true;
+
+            // Восстановление кнопки через 3 секунды (на случай ошибки)
+            setTimeout(() => {
+                e.target.innerHTML = originalText;
+                e.target.disabled = false;
+            }, 3000);
+        }
+    });
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const logoutForm = document.querySelector('#logout-form');
+        if (logoutForm) {
+            logoutForm.addEventListener('submit', function(e) {
+                const submitBtn = this.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+
+                // Показываем индикатор загрузки
+                submitBtn.innerHTML = `
+                    <span class="spinner-border spinner-border-sm"></span>
+                    Выход...
+                `;
+                submitBtn.disabled = true;
+
+                // Продолжаем стандартную отправку формы
+                return true;
+            });
+        }
+    });
+    </script>
 </body>
 </html>
