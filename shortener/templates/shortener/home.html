@@ -13,21 +13,45 @@
     {% if short_url %}
     <div class="result-box">
         <h4 class="result-title">Ваша короткая ссылка:</h4>
-        <div class="input-group result-group">
-            <input type="text"
-                   value="{{ short_url }}"
-                   id="short-url"
-                   class="form-control result-input"
-                   readonly>
-            <button class="btn btn-outline-secondary copy-btn"
-                    onclick="copyToClipboard()">
-                📋 Копировать
-            </button>
+        <div class="result-container">
+            <div class="input-group">
+                <input type="text"
+                       value="{{ short_url }}"
+                       id="short-url"
+                       class="form-control result-input"
+                       readonly>
+                <button class="btn btn-copy" onclick="copyToClipboard()">
+                    <span class="copy-icon"><i class="far fa-copy"></i></span>
+                    <span class="copy-text">Копировать</span>
+                </button>
+            </div>
         </div>
+
         <div class="stats">
-            <span class="badge bg-secondary">Переходов: 0</span>
-            <a href="#" class="qr-link">Получить QR-код</a>
+            <div class="stat-item">
+                <i class="fas fa-mouse-pointer"></i>
+                <span>Переходов: {{ link.click_stats.count }}</span>
+            </div>
+
+            {% if link.clicks.exists %}
+            <div class="stat-chart">
+                <div class="chart-bar" style="width: 100%">
+                    <div class="chart-segment desktop" style="width: {{ device_stats.desktop }}%"></div>
+                    <div class="chart-segment mobile" style="width: {{ device_stats.mobile }}%"></div>
+                    <div class="chart-segment tablet" style="width: {{ device_stats.tablet }}%"></div>
+                </div>
+                <div class="chart-labels">
+                    <span><i class="fas fa-desktop"></i> ПК: {{ device_stats.desktop }}%</span>
+                    <span><i class="fas fa-mobile-alt"></i> Телефоны: {{ device_stats.mobile }}%</span>
+                    <span><i class="fas fa-tablet-alt"></i> Планшеты: {{ device_stats.tablet }}%</span>
+                </div>
+            </div>
+            {% endif %}
         </div>
+    </div>
+
+    <div class="mt-3">
+        <a href="{{ short_url }}" class="btn btn-sm btn-success">Тест: Перейти по ссылке</a>
     </div>
     {% endif %}
 </div>
@@ -38,14 +62,16 @@ function copyToClipboard() {
     input.select();
     document.execCommand('copy');
 
-    // Красивое уведомление вместо alert
-    const notification = document.createElement('div');
-    notification.className = 'copy-notification';
-    notification.textContent = '✓ Ссылка скопирована!';
-    document.body.appendChild(notification);
+    // Визуальный фидбек
+    const btn = document.querySelector('.btn-copy');
+    btn.innerHTML = '<span class="copy-icon">✓</span><span class="copy-text">Скопировано!</span>';
+    btn.style.background = '#e8f5e9';
+    btn.style.borderColor = '#a5d6a7';
 
     setTimeout(() => {
-        notification.remove();
+        btn.innerHTML = '<span class="copy-icon">📋</span><span class="copy-text">Копировать</span>';
+        btn.style.background = '';
+        btn.style.borderColor = '';
     }, 2000);
 }
 </script>

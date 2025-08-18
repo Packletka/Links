@@ -17,6 +17,18 @@
     --shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
+/* Для темной темы */
+[data-theme="dark"] .result-input,
+[data-theme="dark"] .btn-copy {
+    border-color: #555;
+    background: #2d2d2d;
+    color: #fff;
+}
+
+[data-theme="dark"] .btn-copy:hover {
+    background: #3a3a3a;
+}
+
 /* Общие стили для header */
 .site-header {
     background: var(--header-bg);
@@ -307,10 +319,28 @@ html {
     color: var(--text-color);
 }
 
+/* Контейнер результата */
+.result-container {
+    display: flex;
+    gap: 0;
+    width: 100%;
+}
+
 .result-input {
-    padding: 18px;
-    font-size: 1.2rem;
+    flex-grow: 1;
+    padding: 14px 20px;
+    font-size: 1.1rem;
     border: 2px solid #ddd;
+    border-right: none;
+    border-radius: 8px 0 0 8px !important;
+}
+
+.input-group {
+    display: flex;
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 .copy-btn {
@@ -322,8 +352,11 @@ html {
 /* Дополнительные элементы */
 .stats {
     margin-top: 1.5rem;
+    padding: 1rem;
     display: flex;
     align-items: center;
+    background: #f8f9fa;
+    border-radius: 8px;
     gap: 20px;
 }
 
@@ -362,4 +395,74 @@ html {
     20% { opacity: 1; transform: translateX(-50%) translateY(0); }
     80% { opacity: 1; transform: translateX(-50%) translateY(0); }
     100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+}
+
+.btn-copy {
+    padding: 0 20px;
+    background: #f8f9fa;
+    border: 2px solid #ddd;
+    border-left: none;
+    border-radius: 0 8px 8px 0 !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-copy:hover {
+    background: #e9ecef;
+}
+
+.copy-icon {
+    font-size: 1.2rem;
+}
+
+.copy-text {
+    font-weight: 500;
+}
+
+@media (max-width: 576px) {
+    .copy-text {
+        display: none;
+    }
+    .btn-copy {
+        padding: 0 15px;
+    }
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.chart-bar {
+    height: 20px;
+    background: #e9ecef;
+    border-radius: 10px;
+    display: flex;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.chart-segment {
+    height: 100%;
+}
+
+.desktop { background: #4a6bff; }
+.mobile { background: #6f42c1; }
+.tablet { background: #20c997; }
+
+.chart-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+}
+
+.chart-labels span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
